@@ -9,6 +9,7 @@ from streamlit_folium import st_folium
 from typing import TypedDict, Annotated, List, Dict, Any
 from langgraph.graph import StateGraph, START, END
 from langchain_core.messages import HumanMessage, AIMessage
+from langchain_ollama import ChatOllama
 import re
 from collections import Counter
 import io
@@ -43,9 +44,47 @@ st.markdown("""
         padding: 1rem;
         margin-bottom: 1rem;
     }
-
+    .model-info {
+        background-color: #e8f4fd;
+        border-left: 4px solid #1f77b4;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 0 5px 5px 0;
+    }
 </style>
 """, unsafe_allow_html=True)
+
+# Initialize Ollama LLM
+@st.cache_resource
+def get_ollama_llm(model_name: str = "llama3.1:8b"):
+    """Initialize Ollama LLM with specified model"""
+    try:
+        llm = ChatOllama(model=model_name, temperature=0.1)
+        return llm
+    except Exception as e:
+        st.error(f"Error initializing Ollama with model {model_name}: {str(e)}")
+        return None
+
+# Function to get available Ollama models
+@st.cache_data
+def get_available_models():
+    """Get list of available Ollama models"""
+    try:
+        import subprocess
+        result = subprocess.run(['ollama', 'list'], capture_output=True, text=True)
+        if result.returncode == 0:
+            lines = result.stdout.strip().split('\n')[1:]  # Skip header
+            models = []
+            for line in lines:
+                if line.strip():
+                    parts = line.split()
+                    if parts:
+                        models.append(parts[0])
+            return models
+        return []
+    except Exception as e:
+        st.error(f"Error getting available models: {str(e)}")
+        return []
 
 # Simple geocoding function for major cities
 def get_city_coordinates(city: str, country: str) -> Dict[str, float]:
@@ -239,6 +278,7 @@ class AgentState(TypedDict):
     visualization_data: Dict[str, Any]
     needs_clarification: bool
     clarification_question: str
+    selected_model: str
 
 # Initialize session state
 if "messages" not in st.session_state:
@@ -251,31 +291,69 @@ if "agent_state" not in st.session_state:
         "simplified_criteria": "",
         "visualization_data": {},
         "needs_clarification": False,
-        "clarification_question": ""
+        "clarification_question": "",
+        "selected_model": "llama3.1:8b"
     }
 
-# Mock LLM function (replace with actual LLM integration)
-def mock_llm(prompt: str) -> str:
-    """Mock LLM function - replace with actual LLM integration"""
-    # Simple rule-based responses for demonstration
-    if "clarify" in prompt.lower():
-        return "Could you please specify the type of cancer? For example: 'breast cancer', 'lung cancer', 'melanoma', etc."
-    elif "simplify" in prompt.lower():
-        return "Based on the trial criteria, you may be eligible if you: are 18 years or older, have been diagnosed with the condition, and are in generally good health. You may not be eligible if you: are pregnant, have certain other medical conditions, or are taking specific medications."
-    else:
-        return "I understand you're looking for clinical trials. Let me help you find relevant information."
+# Real LLM function using Ollama
+def real_llm(prompt: str, model_name: str = "llama3.1:8b") -> str:
+    """Real LLM function using Ollama for local inference"""
+    try:
+        llm = get_ollama_llm(model_name)
+        if llm is None:
+            return "Error: Could not initialize Ollama LLM. Please check if Ollama is running and the model is available."
+        
+        # Create a more specific prompt for better results
+        if "clarify" in prompt.lower():
+            enhanced_prompt = f"""You are a helpful medical assistant. The user has entered a disease term that might be too general. 
+            Please ask for clarification in a friendly, professional way. 
+            
+            User input: {prompt}
+            
+            Respond with a clear question asking for more specific information about the disease or condition."""
+        elif "simplify" in prompt.lower():
+            enhanced_prompt = f"""You are a medical translator who simplifies complex clinical trial eligibility criteria into plain, 
+            easy-to-understand language for patients and caregivers. 
+            
+            Original criteria: {prompt}
+            
+            Please provide a clear, simple explanation of:
+            1. Who might be eligible (in plain terms)
+            2. Who might not be eligible (in plain terms)
+            3. Any important considerations
+            
+            Use simple language that a non-medical person can understand."""
+        else:
+            enhanced_prompt = f"""You are a helpful medical assistant helping patients find clinical trials. 
+            Please provide a helpful response to: {prompt}"""
+        
+        response = llm.invoke(enhanced_prompt)
+        return response.content if hasattr(response, 'content') else str(response)
+        
+    except Exception as e:
+        st.error(f"Error calling Ollama LLM: {str(e)}")
+        # Fallback to simple responses
+        if "clarify" in prompt.lower():
+            return "Could you please specify the type of cancer? For example: 'breast cancer', 'lung cancer', 'melanoma', etc."
+        elif "simplify" in prompt.lower():
+            return "Based on the trial criteria, you may be eligible if you: are 18 years or older, have been diagnosed with the condition, and are in generally good health. You may not be eligible if you: are pregnant, have certain other medical conditions, or are taking specific medications."
+        else:
+            return "I understand you're looking for clinical trials. Let me help you find relevant information."
 
 # Node functions for LangGraph
 def clarify_disease(state: AgentState) -> AgentState:
     """Check if disease input needs clarification"""
     disease = state.get("disease_name", "").lower()
+    selected_model = state.get("selected_model", "llama3.1:8b")
     
     # Simple rules for ambiguous terms
     ambiguous_terms = ["cancer", "tumor", "disease", "condition", "illness"]
     
     if any(term in disease for term in ambiguous_terms) and len(disease.split()) <= 2:
         state["needs_clarification"] = True
-        state["clarification_question"] = "Could you please specify the type? For example: 'breast cancer', 'lung cancer', 'melanoma', etc."
+        # Use real LLM for better clarification
+        clarification_prompt = f"clarify: {disease}"
+        state["clarification_question"] = real_llm(clarification_prompt, selected_model)
         state["messages"].append(AIMessage(content=state["clarification_question"]))
     else:
         state["needs_clarification"] = False
@@ -344,6 +422,7 @@ def summarize_eligibility(state: AgentState) -> AgentState:
     """Summarize eligibility criteria using LLM"""
     api_results = state.get("api_results", {})
     studies = api_results.get("studies", [])
+    selected_model = state.get("selected_model", "llama3.1:8b")
     
     if not studies:
         state["simplified_criteria"] = "No trials found to analyze eligibility criteria."
@@ -358,9 +437,9 @@ def summarize_eligibility(state: AgentState) -> AgentState:
             exclusion = eligibility.get("exclusionCriteria", "")
             criteria_text += f"Inclusion: {inclusion}\nExclusion: {exclusion}\n\n"
     
-    # Use mock LLM to simplify criteria
-    prompt = f"Simplify these clinical trial eligibility criteria into plain language: {criteria_text}"
-    simplified = mock_llm(prompt)
+    # Use real LLM to simplify criteria
+    prompt = f"simplify: {criteria_text}"
+    simplified = real_llm(prompt, selected_model)
     
     state["simplified_criteria"] = simplified
     return state
@@ -636,6 +715,53 @@ def main():
     st.markdown('<h1 class="main-header">🏥 Patient & Caregiver Trial Navigator</h1>', unsafe_allow_html=True)
     st.markdown('<p style="text-align: center; font-size: 1.2rem; color: #666;">Find and understand clinical trials for your condition</p>', unsafe_allow_html=True)
     
+    # Model selection sidebar
+    with st.sidebar:
+        st.markdown("### 🤖 AI Model Configuration")
+        
+        # Get available models
+        available_models = get_available_models()
+        
+        if available_models:
+            selected_model = st.selectbox(
+                "Choose Ollama Model:",
+                available_models,
+                index=0 if "llama3.1:8b" in available_models else 0,
+                help="Select the local Ollama model to use for AI responses"
+            )
+            
+            # Model info
+            st.markdown(f"""
+            <div class="model-info">
+                <strong>Selected Model:</strong> {selected_model}<br>
+                <strong>Type:</strong> Local (Ollama)<br>
+                <strong>Status:</strong> ✅ Available
+            </div>
+            """, unsafe_allow_html=True)
+            
+            # Test model connection
+            if st.button("Test Model Connection"):
+                with st.spinner("Testing model connection..."):
+                    test_response = real_llm("Hello, this is a test message.", selected_model)
+                    if "Error" not in test_response:
+                        st.success("✅ Model connection successful!")
+                        st.info(f"Test response: {test_response[:100]}...")
+                    else:
+                        st.error("❌ Model connection failed!")
+        else:
+            st.error("❌ No Ollama models found!")
+            st.info("Please install models using: `ollama pull llama3.1:8b`")
+        
+        st.markdown("---")
+        st.markdown("### 📊 App Features")
+        st.markdown("""
+        - 🔍 **Smart Disease Detection**
+        - 📍 **Interactive Trial Map**
+        - 📊 **Phase Distribution Analysis**
+        - 👥 **Demographic Insights**
+        - ✅ **Simplified Eligibility**
+        """)
+    
     # Create two columns
     col1, col2 = st.columns([1, 1])
     
@@ -657,8 +783,9 @@ def main():
             st.session_state.messages.append(HumanMessage(content=prompt))
             st.session_state.agent_state["messages"].append(HumanMessage(content=prompt))
             
-            # Update disease name
+            # Update disease name and selected model
             st.session_state.agent_state["disease_name"] = prompt
+            st.session_state.agent_state["selected_model"] = selected_model
             
             # Run the agent
             with st.spinner("Searching for clinical trials..."):
