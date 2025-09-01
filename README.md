@@ -2,6 +2,10 @@
 
 A comprehensive Streamlit web application that helps patients and caregivers find and understand clinical trials for specific medical conditions. The app uses LangGraph to create a stateful, multi-step agent that interacts with the ClinicalTrials.gov API to provide personalized trial information.
 
+## 🆕 What's New
+
+**🤖 Local AI Integration**: The app now includes optional Ollama support for enhanced AI responses without external APIs. All AI features work out of the box with smart fallbacks, but you can enhance them with local models for better performance and privacy.
+
 ## 🎯 What This App Does
 
 This application is designed to bridge the gap between complex clinical trial information and patients who need it. It transforms technical medical jargon into understandable insights, helping you:
@@ -32,7 +36,26 @@ After entering a condition, you'll get:
 3. **📈 Phase Distribution**: What stages of research are available
 4. **👥 Demographic Analysis**: Age groups, gender requirements, study types
 5. **📋 Trial Details**: Expandable cards with specific trial information
-6. **✅ Simplified Eligibility**: Plain-language explanation of requirements
+6. **✅ Simplified Eligibility**: AI-powered translation of technical criteria into plain language
+
+### 🤖 Enhanced AI Features (Optional)
+
+The app includes AI-powered features that work out of the box, but you can enhance them with local Ollama models:
+
+**Without Ollama**: The app uses smart fallback responses for AI features  
+**With Ollama**: Get enhanced disease clarification and eligibility simplification
+
+**Quick Ollama Setup** (5 minutes):
+```bash
+# 1. Install Ollama
+curl -fsSL https://ollama.ai/install.sh | sh
+
+# 2. Download a model
+ollama pull llama3.1:8b    # Best balance of performance/quality
+
+# 3. Test in the app sidebar
+# Use "Test Model Connection" button
+```
 
 ## ✨ Features
 
@@ -45,6 +68,7 @@ After entering a condition, you'll get:
   - 📈 **Enrollment Statistics**: Total, average, largest, and smallest study sizes
 - **Simplified Eligibility Criteria**: AI-powered translation of technical criteria into plain language
 - **Detailed Trial Information**: Expandable cards with comprehensive trial details
+- **🤖 Local AI Integration**: Optional Ollama support for enhanced AI responses without external APIs
 
 ## 🚀 Quick Start
 
@@ -223,25 +247,23 @@ The agent maintains state through a `TypedDict` structure:
 
 ## 🔧 Configuration
 
-### LLM Integration
+### AI Model Setup
 
-The app currently uses a mock LLM function. To integrate with a real LLM:
+The app automatically detects and uses the best available AI model:
 
-1. **For OpenAI**:
-   ```python
-   from langchain_openai import ChatOpenAI
-   
-   llm = ChatOpenAI(api_key="your-openai-api-key")
-   ```
+**Default (No Setup Required)**: Smart fallback responses for all AI features  
+**With Ollama**: Enhanced AI responses using local models  
+**With API Keys**: OpenAI/Anthropic integration (requires configuration)
 
-2. **For Anthropic**:
-   ```python
-   from langchain_anthropic import ChatAnthropic
-   
-   llm = ChatAnthropic(api_key="your-anthropic-api-key")
-   ```
+**Quick Ollama Setup**:
+```bash
+# Install and run Ollama
+curl -fsSL https://ollama.ai/install.sh | sh
+ollama pull llama3.1:8b
+ollama serve
 
-3. **Replace the `mock_llm` function** in `app.py` with your chosen LLM.
+# The app will automatically detect and use it!
+```
 
 ### API Configuration
 
@@ -303,8 +325,14 @@ Extend the LangGraph workflow by:
    - Implement pagination for large result sets
 
 4. **LLM Integration**
-   - Ensure API keys are properly configured
+   - **For Ollama**: Ensure Ollama is running (`ollama serve`) and models are downloaded
+   - **For OpenAI/Anthropic**: Ensure API keys are properly configured
    - Check rate limits for your chosen LLM provider
+
+5. **Ollama Issues** (if using enhanced AI features)
+   - **Model not found**: Run `ollama pull llama3.1:8b`
+   - **Connection failed**: Run `ollama serve` in terminal
+   - **Slow responses**: Try `ollama pull phi3:mini` for faster inference
 
 ### Performance Optimization
 
@@ -337,6 +365,13 @@ For questions or issues:
 1. Check the troubleshooting section
 2. Review the code comments
 3. Open an issue on the repository
+
+### 🤖 Ollama Support
+
+For enhanced AI features:
+1. **Quick Test**: Run `python test_ollama.py` to verify setup
+2. **Documentation**: Visit [ollama.ai/docs](https://ollama.ai/docs)
+3. **Community**: Check Ollama GitHub discussions
 
 ---
 
