@@ -183,114 +183,6 @@ def visualize_with_networkx():
     
     return plt.gcf()
 
-def create_node_details_diagram():
-    """Create a detailed view of node functionality"""
-    
-    fig, ax = plt.subplots(2, 3, figsize=(18, 12))
-    fig.suptitle('Detailed Node Analysis', fontsize=20, fontweight='bold', color='#1976d2')
-    
-    # Node details
-    node_details = [
-        {
-            'title': 'clarify_disease',
-            'pos': (0, 0),
-            'inputs': ['Disease name'],
-            'outputs': ['Clarification question\nor proceed'],
-            'logic': ['Detects ambiguous terms\nlike "cancer", "disease"']
-        },
-        {
-            'title': 'search_clinical_trials',
-            'pos': (0, 1),
-            'inputs': ['Clarified disease name'],
-            'outputs': ['Raw trial data\nfrom API'],
-            'logic': ['Queries ClinicalTrials.gov\nfetches up to 50 trials']
-        },
-        {
-            'title': 'summarize_eligibility',
-            'pos': (0, 2),
-            'inputs': ['Raw trial data'],
-            'outputs': ['Simplified eligibility\ncriteria'],
-            'logic': ['Uses Ollama LLM to\ntranslate medical jargon']
-        },
-        {
-            'title': 'prepare_visualizations',
-            'pos': (1, 0),
-            'inputs': ['Trial data + eligibility'],
-            'outputs': ['Chart-ready data\nstructures'],
-            'logic': ['Extracts location, phase,\ndemographic data']
-        },
-        {
-            'title': 'patient_profile_matcher',
-            'pos': (1, 1),
-            'inputs': ['Trial data + user profile'],
-            'outputs': ['Personalized\nrecommendations'],
-            'logic': ['Scores trials 0-100\nbased on compatibility']
-        },
-        {
-            'title': 'risk_analyzer',
-            'pos': (1, 2),
-            'inputs': ['Trial data + preferences'],
-            'outputs': ['Risk assessments\nwith safety info'],
-            'logic': ['Analyzes phases, study types\nprovides risk-benefit summary']
-        }
-    ]
-    
-    for node in node_details:
-        row, col = node['pos']
-        ax_pos = ax[row, col]
-        
-        # Node title
-        ax_pos.text(0.5, 0.9, node['title'].replace('_', '\n'), 
-                   ha='center', va='center', fontsize=12, fontweight='bold',
-                   color='#1976d2', transform=ax_pos.transAxes)
-        
-        # Inputs
-        ax_pos.text(0.1, 0.7, 'Inputs:', fontsize=10, fontweight='bold',
-                   transform=ax_pos.transAxes, color='#388e3c')
-        for i, inp in enumerate(node['inputs']):
-            ax_pos.text(0.1, 0.6 - i*0.08, f'• {inp}', fontsize=9,
-                       transform=ax_pos.transAxes, color='#666')
-        
-        # Outputs
-        ax_pos.text(0.1, 0.4, 'Outputs:', fontsize=10, fontweight='bold',
-                   transform=ax_pos.transAxes, color='#f57c00')
-        for i, out in enumerate(node['outputs']):
-            ax_pos.text(0.1, 0.3 - i*0.08, f'• {out}', fontsize=9,
-                       transform=ax_pos.transAxes, color='#666')
-        
-        # Logic
-        ax_pos.text(0.1, 0.15, 'Logic:', fontsize=10, fontweight='bold',
-                   transform=ax_pos.transAxes, color='#7b1fa2')
-        for i, logic in enumerate(node['logic']):
-            ax_pos.text(0.1, 0.05 - i*0.08, f'• {logic}', fontsize=9,
-                       transform=ax_pos.transAxes, color='#666')
-        
-        ax_pos.set_xlim(0, 1)
-        ax_pos.set_ylim(0, 1)
-        ax_pos.axis('off')
-        ax_pos.set_facecolor('#fafafa')
-    
-    # Add workflow flow diagram
-    ax[1, 2].text(0.5, 0.8, 'Data Flow', fontsize=14, fontweight='bold',
-                   ha='center', va='center', transform=ax[1, 2].transAxes, color='#1976d2')
-    
-    flow_text = """START → clarify_disease → 
-search_clinical_trials → 
-summarize_eligibility → 
-prepare_visualizations → 
-patient_profile_matcher → 
-risk_analyzer → END"""
-    
-    ax[1, 2].text(0.5, 0.5, flow_text, fontsize=10, ha='center', va='center',
-                   transform=ax[1, 2].transAxes, color='#666',
-                   bbox=dict(boxstyle="round,pad=0.3", facecolor="white", alpha=0.9))
-    
-    ax[1, 2].axis('off')
-    ax[1, 2].set_facecolor('#fafafa')
-    
-    plt.tight_layout()
-    return fig
-
 if __name__ == "__main__":
     print("🎨 Creating LangGraph workflow visualization...")
     
@@ -309,16 +201,9 @@ if __name__ == "__main__":
     fig1.savefig('langgraph_workflow.png', dpi=300, bbox_inches='tight')
     print("✅ Saved langgraph_workflow.png")
     
-    # Create detailed node analysis
-    print("🎨 Creating detailed node analysis...")
-    fig2 = create_node_details_diagram()
-    fig2.savefig('detailed_nodes.png', dpi=300, bbox_inches='tight')
-    print("✅ Saved detailed_nodes.png")
-    
     print("🎉 LangGraph workflow visualization complete!")
     print("📁 Generated files:")
     print("   - langgraph_workflow.png (LangGraph workflow)")
-    print("   - detailed_nodes.png (node details)")
     
     # Show plots
     plt.show()
