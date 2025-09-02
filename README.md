@@ -2,11 +2,11 @@
 
 A comprehensive Streamlit web application that helps patients and caregivers find and understand clinical trials for specific medical conditions. The app uses LangGraph to create a stateful, multi-step agent that interacts with the ClinicalTrials.gov API to provide personalized trial information.
 
-## 🆕 What's New
+---
 
-**🤖 Local AI Integration**: The app now includes optional Ollama support for enhanced AI responses without external APIs. All AI features work out of the box with smart fallbacks, but you can enhance them with local models for better performance and privacy.
+## 📖 **Understanding the App**
 
-## 🎯 What This App Does
+### 🎯 **What This App Does**
 
 This application is designed to bridge the gap between complex clinical trial information and patients who need it. It transforms technical medical jargon into understandable insights, helping you:
 
@@ -16,9 +16,19 @@ This application is designed to bridge the gap between complex clinical trial in
 - **Learn about trial phases** and what they mean for you
 - **Get simplified explanations** of complex eligibility criteria
 
-## 🚀 Quick Start Guide
+### 🆕 **What's New**
 
-### For First-Time Users
+**🤖 Local AI Integration**: The app now includes optional Ollama support for enhanced AI responses without external APIs. All AI features work out of the box with smart fallbacks, but you can enhance them with local models for better performance and privacy.
+
+**🔄 Reflexion Workflow**: The system now continuously improves search results through intelligent feedback loops, ensuring you get the best possible matches for your condition.
+
+**🎯 Personalized Matching**: Set your profile preferences and get trials scored specifically for you, with clear explanations of why each trial matches.
+
+---
+
+## 🚀 **Quick Start Guide**
+
+### **For First-Time Users**
 
 1. **Open the App**: Navigate to the provided URL (usually `http://localhost:8501`)
 2. **Enter Your Condition**: Type a specific medical condition in the chat box
@@ -27,7 +37,7 @@ This application is designed to bridge the gap between complex clinical trial in
 3. **Wait for Results**: The app will search ClinicalTrials.gov and process the data
 4. **Explore the Results**: Use the interactive features to understand your options
 
-### What You'll See
+### **What You'll See**
 
 After entering a condition, you'll get:
 
@@ -38,112 +48,16 @@ After entering a condition, you'll get:
 5. **📋 Trial Details**: Expandable cards with specific trial information
 6. **✅ Simplified Eligibility**: AI-powered translation of technical criteria into plain language
 
-### 🤖 Enhanced AI Features (Optional)
+---
 
-The app includes AI-powered features that work out of the box, but you can enhance them with local Ollama models:
+## 🔧 **Installation & Setup**
 
-**Without Ollama**: The app uses smart fallback responses for AI features  
-**With Ollama**: Get enhanced disease clarification and eligibility simplification
-
-**Quick Ollama Setup** (5 minutes):
-```bash
-# 1. Install Ollama
-curl -fsSL https://ollama.ai/install.sh | sh
-
-# 2. Download a model
-ollama pull llama3.1:8b    # Best balance of performance/quality
-
-# 3. Test in the app sidebar
-# Use "Test Model Connection" button
-```
-
-## ✨ Features
-
-- **Conversational Interface**: Chat-based interaction with an AI agent that can clarify ambiguous disease inputs
-- **Real-time Trial Search**: Direct integration with ClinicalTrials.gov API v2
-- **Interactive Visualizations**:
-  - 🌍 **Interactive World Map**: Shows trial locations with color-coded markers by phase
-  - 📊 **Trial Phase Distribution**: Swimlane chart showing distribution of trial phases
-  - 📊 **Demographic Analysis**: Age groups, gender requirements, and study types
-  - 📈 **Enrollment Statistics**: Total, average, largest, and smallest study sizes
-- **Simplified Eligibility Criteria**: AI-powered translation of technical criteria into plain language
-- **Detailed Trial Information**: Expandable cards with comprehensive trial details
-- **🤖 Local AI Integration**: Optional Ollama support for enhanced AI responses without external APIs
-
-### 🆕 **New Advanced Features**
-
-#### 🎯 **Personalized Trial Matching**
-- **User Profile System**: Set your age, gender, location, risk tolerance, and travel preferences
-- **Intelligent Scoring**: Trials are scored 0-100 based on how well they match your profile
-- **Real-time Updates**: Results change immediately as you modify your profile
-- **Match Explanations**: See exactly why each trial matches your profile
-
-#### ⚠️ **Risk Assessment & Safety Analysis**
-- **Phase-based Risk Levels**: Clear risk assessment (Low, Medium, Medium-High, High)
-- **Safety Considerations**: Plain language explanations of risks and benefits
-- **Color-coded Risk Display**: Visual indicators for easy understanding
-- **Study Type Analysis**: Different risk profiles for interventional vs. observational studies
-
-#### 🚀 **Enhanced User Experience**
-- **Auto-save Profiles**: No manual save required - updates happen automatically
-- **Smart Guidance**: Clear explanations of what each preference means
-- **Personalized Statistics**: See enrollment numbers for trials that match your profile
-- **Comparison Views**: Compare personalized results with overall trial availability
-
-#### 🔄 **Reflexion Workflow & Quality Improvement**
-- **Smart Search Refinement**: The system automatically improves search results through feedback loops
-- **Quality Evaluation**: Continuous assessment of result relevance and accuracy
-- **Profile Refinement**: Dynamic adjustment of search strategies based on user feedback
-- **Story Journey Visualization**: See how the system improved your results step-by-step
-- **Workflow Status Tracking**: Real-time monitoring of the search and refinement process
-
-## 🔄 **LangGraph Workflow Architecture**
-
-The app uses **LangGraph** to create an intelligent, multi-step workflow that continuously improves search results:
-
-### **Core Workflow Nodes**
-1. **🔍 Disease Clarifier**: Understands and clarifies user input
-2. **📊 API Searcher**: Queries ClinicalTrials.gov with refined search terms
-3. **📋 Results Processor**: Analyzes and structures trial data
-4. **🎯 Patient Profile Matcher**: Scores trials based on user preferences
-5. **⚠️ Risk Assessor**: Evaluates safety and risk levels
-6. **📝 Eligibility Summarizer**: Simplifies complex medical criteria
-
-### **🔄 Reflexion Enhancement Nodes**
-7. **🔍 Quality Evaluator**: Assesses result relevance and accuracy
-8. **🔄 Search Refiner**: Improves search strategies based on feedback
-9. **👤 Profile Refiner**: Adjusts matching algorithms dynamically
-
-### **How It Works**
-- **Initial Search**: Basic search based on user input
-- **Quality Check**: System evaluates if results meet user needs
-- **Refinement Loop**: If quality is insufficient, the system refines the search
-- **Continuous Improvement**: Multiple feedback loops ensure optimal results
-- **User Experience**: See the entire journey through the "Story Journey" feature
-
-### **📊 Workflow Visualization**
-The LangGraph workflow is visualized in the generated images:
-- **`langgraph_workflow.png`**: Overview of the complete workflow with nodes and connections
-- **`detailed_nodes.png`**: Detailed analysis of each node's functionality and data flow
-
-**🎨 Enhanced Visualization Features:**
-- **Centered Layout**: Main workflow nodes are positioned in a clear horizontal flow
-- **Intuitive Reflexion Loops**: Feedback loops are shown with curved dashed lines and clear direction
-- **Clean Design**: Minimal visual clutter with focus on the workflow structure
-- **Color-Coded Nodes**: Different colors for core, personalization, and reflexion nodes
-- **Clear Flow Direction**: Forward flow and feedback loops are visually distinct
-- **Optimal Legend Placement**: Legend positioned at bottom left to avoid overlapping with nodes
-
-For technical details, see `LANGGRAPH_WORKFLOW.md` in the project directory.
-
-## 🚀 Quick Start
-
-### Prerequisites
+### **Prerequisites**
 
 - Python 3.8 or higher
 - pip (Python package installer)
 
-### Installation
+### **Step-by-Step Installation**
 
 1. **Clone or download this repository**
    ```bash
@@ -170,11 +84,130 @@ For technical details, see `LANGGRAPH_WORKFLOW.md` in the project directory.
 5. **Open your browser**
    Navigate to `http://localhost:8501` to access the application.
 
-## 📖 Detailed User Instructions
+### **Optional: Enhanced AI Setup (5 minutes)**
 
-### 🎯 How to Use the App
+**Without Ollama**: The app uses smart fallback responses for AI features  
+**With Ollama**: Get enhanced disease clarification and eligibility simplification
 
-#### Step 1: Enter Your Medical Condition
+```bash
+# 1. Install Ollama
+curl -fsSL https://ollama.ai/install.sh | sh
+
+# 2. Download a model
+ollama pull llama3.1:8b    # Best balance of performance/quality
+
+# 3. Test in the app sidebar
+# Use "Test Model Connection" button
+```
+
+---
+
+## 🧪 **Testing the App**
+
+### **Basic Functionality Test**
+
+1. **Launch the app**: `streamlit run app.py`
+2. **Test search**: Enter "diabetes" in the chat box
+3. **Verify results**: Check that trials appear and map loads
+4. **Test interactions**: Click on map markers and expand trial cards
+
+### **Advanced Features Test**
+
+1. **Profile setup**: Fill out the user profile in the left sidebar
+2. **Personalization**: Verify that trial recommendations change based on your profile
+3. **Risk assessment**: Check that risk levels are displayed correctly
+4. **Story Journey**: Look for the workflow visualization at the bottom
+
+### **AI Features Test**
+
+1. **Basic AI**: Test disease clarification with ambiguous terms
+2. **Ollama integration**: If installed, test enhanced AI responses
+3. **Eligibility summarization**: Check that complex criteria are simplified
+
+---
+
+## ✨ **Features Overview**
+
+### **Core Features**
+
+- **Conversational Interface**: Chat-based interaction with an AI agent that can clarify ambiguous disease inputs
+- **Real-time Trial Search**: Direct integration with ClinicalTrials.gov API v2
+- **Interactive Visualizations**:
+  - 🌍 **Interactive World Map**: Shows trial locations with color-coded markers by phase
+  - 📊 **Trial Phase Distribution**: Swimlane chart showing distribution of trial phases
+  - 📊 **Demographic Analysis**: Age groups, gender requirements, and study types
+  - 📈 **Enrollment Statistics**: Total, average, largest, and smallest study sizes
+- **Simplified Eligibility Criteria**: AI-powered translation of technical criteria into plain language
+- **Detailed Trial Information**: Expandable cards with comprehensive trial details
+
+### **🆕 Advanced Features**
+
+#### **🎯 Personalized Trial Matching**
+- **User Profile System**: Set your age, gender, location, risk tolerance, and travel preferences
+- **Intelligent Scoring**: Trials are scored 0-100 based on how well they match your profile
+- **Real-time Updates**: Results change immediately as you modify your profile
+- **Match Explanations**: See exactly why each trial matches your profile
+
+#### **⚠️ Risk Assessment & Safety Analysis**
+- **Phase-based Risk Levels**: Clear risk assessment (Low, Medium, Medium-High, High)
+- **Safety Considerations**: Plain language explanations of risks and benefits
+- **Color-coded Risk Display**: Visual indicators for easy understanding
+- **Study Type Analysis**: Different risk profiles for interventional vs. observational studies
+
+#### **🔄 Reflexion Workflow & Quality Improvement**
+- **Smart Search Refinement**: The system automatically improves search results through feedback loops
+- **Quality Evaluation**: Continuous assessment of result relevance and accuracy
+- **Profile Refinement**: Dynamic adjustment of search strategies based on user feedback
+- **Story Journey Visualization**: See how the system improved your results step-by-step
+- **Workflow Status Tracking**: Real-time monitoring of the search and refinement process
+
+---
+
+## 🔄 **LangGraph Workflow Architecture**
+
+The app uses **LangGraph** to create an intelligent, multi-step workflow that continuously improves search results:
+
+### **Core Workflow Nodes**
+1. **🔍 Disease Clarifier**: Understands and clarifies user input
+2. **📊 API Searcher**: Queries ClinicalTrials.gov with refined search terms
+3. **📋 Results Processor**: Analyzes and structures trial data
+4. **🎯 Patient Profile Matcher**: Scores trials based on user preferences
+5. **⚠️ Risk Assessor**: Evaluates safety and risk levels
+6. **📝 Eligibility Summarizer**: Simplifies complex medical criteria
+
+### **🔄 Reflexion Enhancement Nodes**
+7. **🔍 Quality Evaluator**: Assesses result relevance and accuracy
+8. **🔄 Search Refiner**: Improves search strategies based on feedback
+9. **👤 Profile Refiner**: Adjusts matching algorithms dynamically
+
+### **How It Works**
+- **Initial Search**: Basic search based on user input
+- **Quality Check**: System evaluates if results meet user needs
+- **Refinement Loop**: If quality is insufficient, the system refines the search
+- **Continuous Improvement**: Multiple feedback loops ensure optimal results
+- **User Experience**: See the entire journey through the "Story Journey" feature
+
+### **📊 Workflow Visualization**
+The LangGraph workflow is visualized in the generated image:
+- **`langgraph_workflow.png`**: Overview of the complete workflow with nodes and connections
+
+**🎨 Enhanced Visualization Features:**
+- **Centered Layout**: Main workflow nodes are positioned in a clear horizontal flow
+- **Intuitive Reflexion Loops**: Feedback loops are shown with curved dashed lines and clear direction
+- **Clean Design**: Minimal visual clutter with focus on the workflow structure
+- **Color-Coded Nodes**: Different colors for core, personalization, and reflexion nodes
+- **Clear Flow Direction**: Forward flow and feedback loops are visually distinct
+- **Optimal Legend Placement**: Legend positioned at bottom left to avoid overlapping with nodes
+
+For technical details, see `LANGGRAPH_WORKFLOW.md` in the project directory.
+
+---
+
+## 📖 **Detailed User Instructions**
+
+### **🎯 How to Use the App**
+
+#### **Step 1: Enter Your Medical Condition**
 - **Be Specific**: Instead of "cancer", try "breast cancer", "lung cancer", or "melanoma"
 - **Use Medical Terms**: "diabetes mellitus" or "type 2 diabetes" work well
 - **Try Different Variations**: If "depression" doesn't work, try "major depressive disorder"
@@ -191,7 +224,7 @@ For technical details, see `LANGGRAPH_WORKFLOW.md` in the project directory.
 - ❌ "sick" (not specific)
 - ❌ "pain" (too general)
 
-#### Step 2: Understanding the Results
+#### **Step 2: Understanding the Results**
 
 **Interactive Map Features:**
 - **Red Markers**: Phase 1 trials (early safety testing)
@@ -206,7 +239,7 @@ For technical details, see `LANGGRAPH_WORKFLOW.md` in the project directory.
 - Trial phase
 - Direct link to ClinicalTrials.gov
 
-#### Step 3: Analyzing Trial Phases
+#### **Step 3: Analyzing Trial Phases**
 
 **What Trial Phases Mean:**
 - **Phase 1**: Tests safety and dosage (small groups, 20-80 people)
@@ -214,7 +247,7 @@ For technical details, see `LANGGRAPH_WORKFLOW.md` in the project directory.
 - **Phase 3**: Compares with standard treatment (large groups, 1,000-3,000 people)
 - **Phase 4**: Studies after FDA approval (monitoring long-term effects)
 
-#### Step 4: Understanding Demographics
+#### **Step 4: Understanding Demographics**
 
 **Age Groups:**
 - **CHILD**: Under 18 years
@@ -231,7 +264,7 @@ For technical details, see `LANGGRAPH_WORKFLOW.md` in the project directory.
 - **Observational**: Studies existing conditions without intervention
 - **Healthy Volunteers**: Studies that need healthy participants
 
-#### Step 5: Reading Trial Details
+#### **Step 5: Reading Trial Details**
 
 **Expand any trial card to see:**
 - **Condition**: What the trial is studying
@@ -240,7 +273,7 @@ For technical details, see `LANGGRAPH_WORKFLOW.md` in the project directory.
 - **Locations**: Where the trial is happening
 - **Direct Link**: Click to see full details on ClinicalTrials.gov
 
-### 🆕 **Step 6: Using Personalized Features**
+### **🆕 Step 6: Using Personalized Features**
 
 #### **Setting Your Profile**
 1. **Look at the left sidebar** for "👤 User Profile & Preferences"
@@ -285,7 +318,7 @@ The app now includes an intelligent workflow that continuously improves your res
 - Visual indicators of workflow progress
 - Clear explanations of what's happening behind the scenes
 
-### 💡 Tips for Better Results
+### **💡 Tips for Better Results**
 
 1. **Start Specific**: Use precise medical terms
 2. **Try Variations**: If one term doesn't work, try synonyms
@@ -294,7 +327,7 @@ The app now includes an intelligent workflow that continuously improves your res
 5. **Read Eligibility**: Make sure you meet the basic requirements
 6. **Contact Sites**: Use the ClinicalTrials.gov links to contact trial coordinators
 
-### ⚠️ Important Notes
+### **⚠️ Important Notes**
 
 - **This app is for informational purposes only**
 - **Always consult with your healthcare provider** before considering clinical trials
@@ -302,33 +335,37 @@ The app now includes an intelligent workflow that continuously improves your res
 - **Not all trials are suitable for everyone** - eligibility criteria are strict for safety
 - **Participation is voluntary** - you can withdraw at any time
 
-## ❓ Frequently Asked Questions
+---
 
-### What is this app?
+## ❓ **Frequently Asked Questions**
+
+### **What is this app?**
 This is a **clinical trial search and analysis tool** that helps patients and caregivers find relevant clinical trials and understand if they might qualify.
 
-### Is this medical advice?
+### **Is this medical advice?**
 **No.** This app provides information about clinical trials but does not give medical advice. Always consult with your healthcare provider.
 
-### How current is the trial information?
+### **How current is the trial information?**
 The app pulls data directly from ClinicalTrials.gov, which is updated regularly. However, trial status can change quickly, so always verify with the trial site.
 
-### What if I don't see any trials for my condition?
+### **What if I don't see any trials for my condition?**
 - Try different variations of your condition name
 - Check related conditions
 - Some rare conditions may have limited trial options
 - Consider expanding your search geographically
 
-### How do I contact a trial site?
+### **How do I contact a trial site?**
 Click on any trial marker on the map or expand a trial card to get the direct link to ClinicalTrials.gov, where you can find contact information.
 
-### Are these trials free?
+### **Are these trials free?**
 Clinical trials often provide the treatment at no cost, but you should discuss costs with the trial coordinator. Some trials may cover travel expenses.
 
-### What if I'm not eligible for any trials?
+### **What if I'm not eligible for any trials?**
 This is common and normal. Clinical trials have strict criteria for safety reasons. Discuss other treatment options with your healthcare provider.
 
-## 🚫 What This App Is NOT
+---
+
+## 🚫 **What This App Is NOT**
 
 - **Medical advice** - Always consult healthcare professionals
 - **A replacement for doctor consultation** - Use this as a starting point
@@ -336,9 +373,11 @@ This is common and normal. Clinical trials have strict criteria for safety reaso
 - **Real-time trial status** - Information may have slight delays
 - **A comprehensive medical database** - Focuses on clinical trials only
 
-## 🏗️ Architecture
+---
 
-### LangGraph Agent Structure
+## 🏗️ **Technical Architecture**
+
+### **LangGraph Agent Structure**
 
 The application uses LangGraph to create a sophisticated, stateful workflow with **9 intelligent nodes**:
 
@@ -355,7 +394,7 @@ The application uses LangGraph to create a sophisticated, stateful workflow with
 8. **`search_refiner`** 🆕: Improves search strategies based on feedback
 9. **`profile_refiner`** 🆕: Adjusts matching algorithms dynamically
 
-### State Management
+### **State Management**
 
 The agent maintains state through an enhanced `TypedDict` structure:
 - `messages`: Conversation history
@@ -372,13 +411,13 @@ The agent maintains state through an enhanced `TypedDict` structure:
   - `profile_refinement`: Dynamic profile adjustments
   - `personalized_recommendations`: Profile-matched trial suggestions
 
-### Workflow Flow
+### **Workflow Flow**
 ```
 START → clarify_disease → search_clinical_trials → summarize_eligibility → 
 prepare_visualizations → patient_profile_matcher → risk_analyzer → END
 ```
 
-### 🔧 **Technical Improvements**
+### **🔧 Technical Improvements**
 
 #### **Enhanced Data Processing**
 - **Robust Age Parsing**: Handles various API age formats ("18 Years", "65+", "Unknown")
@@ -395,9 +434,11 @@ prepare_visualizations → patient_profile_matcher → risk_analyzer → END
 - **User-friendly Messages**: Clear explanations when things go wrong
 - **Fallback Mechanisms**: Smart defaults when data is unavailable
 
-## 🔧 Configuration
+---
 
-### AI Model Setup
+## 🔧 **Configuration & Customization**
+
+### **AI Model Setup**
 
 The app automatically detects and uses the best available AI model:
 
@@ -415,14 +456,38 @@ ollama serve
 # The app will automatically detect and use it!
 ```
 
-### API Configuration
+### **API Configuration**
 
 The app uses the ClinicalTrials.gov API v2. No API key is required, but you can customize:
 - `pageSize`: Number of trials per request (default: 50)
 - `fields`: Specific data fields to retrieve
 - `filter.overallStatus`: Trial status filter (default: "RECRUITING")
 
-## 📊 Data Sources
+### **Styling Customization**
+
+The app uses custom CSS for styling. Modify the CSS in the `st.markdown` section to change:
+- Colors and fonts
+- Layout spacing
+- Card styling
+- Header appearance
+
+### **Visualization Customization**
+
+Customize charts by modifying:
+- **Map**: Change pin colors, sizes, or add custom popups
+- **Pie Chart**: Adjust colors, labels, or chart type
+- **Word Cloud**: Modify colors, word limits, or layout
+
+### **Agent Logic Extension**
+
+Extend the LangGraph workflow by:
+- Adding new nodes for additional processing
+- Implementing conditional edges for complex workflows
+- Enhancing the clarification logic for better disease detection
+
+---
+
+## 📊 **Data Sources**
 
 - **ClinicalTrials.gov API v2**: Primary source for trial data
 - **Fields Retrieved**:
@@ -433,33 +498,11 @@ The app uses the ClinicalTrials.gov API v2. No API key is required, but you can 
   - Eligibility criteria
   - Intervention details
 
-## 🎨 Customization
+---
 
-### Styling
+## 🐛 **Troubleshooting**
 
-The app uses custom CSS for styling. Modify the CSS in the `st.markdown` section to change:
-- Colors and fonts
-- Layout spacing
-- Card styling
-- Header appearance
-
-### Visualizations
-
-Customize charts by modifying:
-- **Map**: Change pin colors, sizes, or add custom popups
-- **Pie Chart**: Adjust colors, labels, or chart type
-- **Word Cloud**: Modify colors, word limits, or layout
-
-### Agent Logic
-
-Extend the LangGraph workflow by:
-- Adding new nodes for additional processing
-- Implementing conditional edges for complex workflows
-- Enhancing the clarification logic for better disease detection
-
-## 🐛 Troubleshooting
-
-### Common Issues
+### **Common Issues**
 
 1. **Import Errors**
    - Ensure all dependencies are installed: `pip install -r requirements.txt`
@@ -484,13 +527,15 @@ Extend the LangGraph workflow by:
    - **Connection failed**: Run `ollama serve` in terminal
    - **Slow responses**: Try `ollama pull phi3:mini` for faster inference
 
-### Performance Optimization
+### **Performance Optimization**
 
 - Use `@st.cache_resource` for expensive operations
 - Implement lazy loading for large datasets
 - Consider using async requests for API calls
 
-## 🤝 Contributing
+---
+
+## 🤝 **Contributing**
 
 1. Fork the repository
 2. Create a feature branch
@@ -498,25 +543,31 @@ Extend the LangGraph workflow by:
 4. Add tests if applicable
 5. Submit a pull request
 
-## 📄 License
+---
+
+## 📄 **License**
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 🙏 Acknowledgments
+---
+
+## 🙏 **Acknowledgments**
 
 - ClinicalTrials.gov for providing the API
 - Streamlit for the web framework
 - LangGraph for the agent orchestration
 - The open-source community for the visualization libraries
 
-## 📞 Support
+---
+
+## 📞 **Support**
 
 For questions or issues:
 1. Check the troubleshooting section
 2. Review the code comments
 3. Open an issue on the repository
 
-### 🤖 Ollama Support
+### **🤖 Ollama Support**
 
 For enhanced AI features:
 1. **Quick Test**: Run `python test_ollama.py` to verify setup
