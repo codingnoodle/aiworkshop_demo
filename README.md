@@ -70,6 +70,72 @@ ollama pull llama3.1:8b    # Best balance of performance/quality
 - **Detailed Trial Information**: Expandable cards with comprehensive trial details
 - **🤖 Local AI Integration**: Optional Ollama support for enhanced AI responses without external APIs
 
+### 🆕 **New Advanced Features**
+
+#### 🎯 **Personalized Trial Matching**
+- **User Profile System**: Set your age, gender, location, risk tolerance, and travel preferences
+- **Intelligent Scoring**: Trials are scored 0-100 based on how well they match your profile
+- **Real-time Updates**: Results change immediately as you modify your profile
+- **Match Explanations**: See exactly why each trial matches your profile
+
+#### ⚠️ **Risk Assessment & Safety Analysis**
+- **Phase-based Risk Levels**: Clear risk assessment (Low, Medium, Medium-High, High)
+- **Safety Considerations**: Plain language explanations of risks and benefits
+- **Color-coded Risk Display**: Visual indicators for easy understanding
+- **Study Type Analysis**: Different risk profiles for interventional vs. observational studies
+
+#### 🚀 **Enhanced User Experience**
+- **Auto-save Profiles**: No manual save required - updates happen automatically
+- **Smart Guidance**: Clear explanations of what each preference means
+- **Personalized Statistics**: See enrollment numbers for trials that match your profile
+- **Comparison Views**: Compare personalized results with overall trial availability
+
+#### 🔄 **Reflexion Workflow & Quality Improvement**
+- **Smart Search Refinement**: The system automatically improves search results through feedback loops
+- **Quality Evaluation**: Continuous assessment of result relevance and accuracy
+- **Profile Refinement**: Dynamic adjustment of search strategies based on user feedback
+- **Story Journey Visualization**: See how the system improved your results step-by-step
+- **Workflow Status Tracking**: Real-time monitoring of the search and refinement process
+
+## 🔄 **LangGraph Workflow Architecture**
+
+The app uses **LangGraph** to create an intelligent, multi-step workflow that continuously improves search results:
+
+### **Core Workflow Nodes**
+1. **🔍 Disease Clarifier**: Understands and clarifies user input
+2. **📊 API Searcher**: Queries ClinicalTrials.gov with refined search terms
+3. **📋 Results Processor**: Analyzes and structures trial data
+4. **🎯 Patient Profile Matcher**: Scores trials based on user preferences
+5. **⚠️ Risk Assessor**: Evaluates safety and risk levels
+6. **📝 Eligibility Summarizer**: Simplifies complex medical criteria
+
+### **🔄 Reflexion Enhancement Nodes**
+7. **🔍 Quality Evaluator**: Assesses result relevance and accuracy
+8. **🔄 Search Refiner**: Improves search strategies based on feedback
+9. **👤 Profile Refiner**: Adjusts matching algorithms dynamically
+
+### **How It Works**
+- **Initial Search**: Basic search based on user input
+- **Quality Check**: System evaluates if results meet user needs
+- **Refinement Loop**: If quality is insufficient, the system refines the search
+- **Continuous Improvement**: Multiple feedback loops ensure optimal results
+- **User Experience**: See the entire journey through the "Story Journey" feature
+
+### **📊 Workflow Visualization**
+The LangGraph workflow is visualized in the generated images:
+- **`langgraph_workflow.png`**: Overview of the complete workflow with nodes and connections
+- **`detailed_nodes.png`**: Detailed analysis of each node's functionality and data flow
+
+**🎨 Enhanced Visualization Features:**
+- **Centered Layout**: Main workflow nodes are positioned in a clear horizontal flow
+- **Intuitive Reflexion Loops**: Feedback loops are shown with curved dashed lines and clear direction
+- **Clean Design**: Minimal visual clutter with focus on the workflow structure
+- **Color-Coded Nodes**: Different colors for core, personalization, and reflexion nodes
+- **Clear Flow Direction**: Forward flow and feedback loops are visually distinct
+- **Optimal Legend Placement**: Legend positioned at bottom left to avoid overlapping with nodes
+
+For technical details, see `LANGGRAPH_WORKFLOW.md` in the project directory.
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -174,6 +240,51 @@ ollama pull llama3.1:8b    # Best balance of performance/quality
 - **Locations**: Where the trial is happening
 - **Direct Link**: Click to see full details on ClinicalTrials.gov
 
+### 🆕 **Step 6: Using Personalized Features**
+
+#### **Setting Your Profile**
+1. **Look at the left sidebar** for "👤 User Profile & Preferences"
+2. **Expand the profile section** and fill in your details:
+   - **Age**: Your current age
+   - **Gender**: Your gender preference
+   - **Location**: Your preferred trial location
+   - **Risk Tolerance**: How comfortable you are with experimental treatments
+   - **Travel Preference**: How far you're willing to travel
+3. **Profile updates automatically** - no save button needed!
+
+#### **Understanding Risk Levels**
+- **🟢 Low Risk**: Phase 3-4 trials with established safety records
+- **🟡 Medium Risk**: Phase 2-3 trials with some safety data
+- **🟠 Medium-High Risk**: Phase 2 trials testing effectiveness
+- **🔴 High Risk**: Phase 1 trials with cutting-edge experimental treatments
+
+#### **Reading Personalized Results**
+- **🎯 Personalized Recommendations**: Top 5 trials that match your profile
+- **Match Scores**: 0-100 scale showing how well each trial fits you
+- **Match Reasons**: Clear explanations of why each trial matches
+- **Personalized Statistics**: Enrollment numbers for trials you're eligible for
+
+#### **Step 7: Understanding the Reflexion Workflow**
+
+The app now includes an intelligent workflow that continuously improves your results:
+
+**Story Journey Feature:**
+- **Chapter 1**: Initial search results
+- **Chapter 2**: Smart analysis of your profile
+- **Chapter 3**: Quality evaluation and refinement
+- **Chapter 4**: Final personalized recommendations
+
+**What This Means:**
+- The system doesn't just search once - it learns and improves
+- Results get better through multiple refinement cycles
+- You can see exactly how the system improved your search
+- Quality metrics show the improvement over time
+
+**Workflow Status:**
+- Real-time monitoring of the search process
+- Visual indicators of workflow progress
+- Clear explanations of what's happening behind the scenes
+
 ### 💡 Tips for Better Results
 
 1. **Start Specific**: Use precise medical terms
@@ -229,21 +340,60 @@ This is common and normal. Clinical trials have strict criteria for safety reaso
 
 ### LangGraph Agent Structure
 
-The application uses LangGraph to create a stateful workflow with the following nodes:
+The application uses LangGraph to create a sophisticated, stateful workflow with **9 intelligent nodes**:
 
+**Core Workflow Nodes:**
 1. **`clarify_disease`**: Checks if user input needs clarification
 2. **`search_clinical_trials`**: Queries ClinicalTrials.gov API
 3. **`summarize_eligibility`**: Uses LLM to simplify eligibility criteria
 4. **`prepare_visualizations`**: Processes data for charts and maps
+5. **`patient_profile_matcher`** 🆕: Analyzes user profile and matches with most relevant trials
+6. **`risk_analyzer`** 🆕: Evaluates risks and benefits of each trial
+
+**🔄 Reflexion Enhancement Nodes:**
+7. **`quality_evaluator`** 🆕: Assesses result relevance and accuracy
+8. **`search_refiner`** 🆕: Improves search strategies based on feedback
+9. **`profile_refiner`** 🆕: Adjusts matching algorithms dynamically
 
 ### State Management
 
-The agent maintains state through a `TypedDict` structure:
+The agent maintains state through an enhanced `TypedDict` structure:
 - `messages`: Conversation history
 - `disease_name`: Current search term
 - `api_results`: Raw API response data
 - `simplified_criteria`: LLM-processed eligibility criteria
 - `visualization_data`: Processed data for charts
+- **Personalization fields**:
+  - `user_profile`: User demographics and preferences
+  - `risk_assessments`: Trial risk analysis results
+- **🔄 Reflexion workflow fields**:
+  - `quality_metrics`: Assessment of result quality
+  - `search_strategy`: Current search approach
+  - `profile_refinement`: Dynamic profile adjustments
+  - `personalized_recommendations`: Profile-matched trial suggestions
+
+### Workflow Flow
+```
+START → clarify_disease → search_clinical_trials → summarize_eligibility → 
+prepare_visualizations → patient_profile_matcher → risk_analyzer → END
+```
+
+### 🔧 **Technical Improvements**
+
+#### **Enhanced Data Processing**
+- **Robust Age Parsing**: Handles various API age formats ("18 Years", "65+", "Unknown")
+- **Type Safety**: Proper integer conversion and error handling
+- **Efficient Algorithms**: Single-pass processing for optimal performance
+
+#### **Smart State Management**
+- **Auto-save Profiles**: Real-time profile updates without manual intervention
+- **Conditional Rendering**: UI adapts based on user profile availability
+- **Persistent State**: Profile preferences maintained across sessions
+
+#### **Advanced Error Handling**
+- **Graceful Degradation**: App continues working even if some features fail
+- **User-friendly Messages**: Clear explanations when things go wrong
+- **Fallback Mechanisms**: Smart defaults when data is unavailable
 
 ## 🔧 Configuration
 
