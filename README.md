@@ -18,10 +18,10 @@ This application is designed to bridge the gap between complex clinical trial in
 
 ### 🆕 **What's New**
 
-**🤖 AI Integration Options**: The app includes multiple AI integration options:
-- **OpenAI Integration** (openai-integration branch): Cloud-based AI using OpenAI API for enhanced responses
-- **Local AI Integration** (ollama-integration branch): Local Ollama support for privacy-focused AI responses
+**🤖 AI Integration**: The app now uses OpenAI API by default for enhanced AI responses:
+- **OpenAI Integration** (main branch): Cloud-based AI using OpenAI API for enhanced responses
 - **Smart Fallbacks**: All AI features work out of the box with intelligent fallback responses
+- **Alternative Options**: Ollama integration available on `ollama-integration` branch for local AI
 
 **🔄 Reflexion Workflow**: The system now continuously improves search results through intelligent feedback loops, ensuring you get the best possible matches for your condition.
 
@@ -69,31 +69,22 @@ After entering a condition, you'll get:
 This repository includes multiple versions optimized for different use cases:
 
 ### **Main Branch** (Default)
-- **Smart Fallbacks**: Works without any AI setup
-- **Basic Features**: Core clinical trial search and visualization
-- **Perfect for**: Quick demos and basic functionality
-
-### **OpenAI Integration Branch** (`openai-integration`)
-- **Cloud AI**: Uses OpenAI API for enhanced AI responses
-- **Advanced Features**: Disease clarification, eligibility simplification
-- **Perfect for**: Workshops, demos, and users with OpenAI API access
-- **Setup**: Requires OpenAI API key via environment variables (secure)
+- **OpenAI Integration**: Uses OpenAI API for enhanced AI responses
+- **Smart Fallbacks**: Works without API key setup
+- **Perfect for**: Workshops and production use
 
 ### **Ollama Integration Branch** (`ollama-integration`)
 - **Local AI**: Uses Ollama for privacy-focused AI responses
-- **Advanced Features**: Same as OpenAI but runs locally
+- **Advanced Features**: Same as main branch but runs locally
 - **Perfect for**: Privacy-conscious users and offline environments
 - **Setup**: Requires Ollama installation
 
 ### **Switching Branches**
 ```bash
-# Switch to OpenAI version
-git checkout openai-integration
-
-# Switch to Ollama version  
+# Switch to Ollama version (local AI)
 git checkout ollama-integration
 
-# Switch back to main
+# Switch back to main (OpenAI integration)
 git checkout main
 ```
 
