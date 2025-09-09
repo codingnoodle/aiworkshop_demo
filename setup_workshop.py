@@ -49,6 +49,17 @@ def test_streamlit():
         print(f"❌ Streamlit import failed: {e}")
         return False
 
+def test_openai():
+    """Test if OpenAI can be imported."""
+    print("\n🤖 Testing OpenAI integration...")
+    try:
+        from langchain_openai import ChatOpenAI
+        print("✅ OpenAI integration ready!")
+        return True
+    except ImportError as e:
+        print(f"❌ OpenAI import failed: {e}")
+        return False
+
 def create_workshop_instructions():
     """Create workshop-specific instructions."""
     instructions = """
@@ -63,23 +74,32 @@ def create_workshop_instructions():
 
 ## 🧪 Workshop Exercises
 
-### Exercise 1: Basic Search (5 minutes)
+### Exercise 1: OpenAI Setup (2 minutes)
+- Get your OpenAI API key from https://platform.openai.com/api-keys
+- Enter the API key in the left sidebar
+- Test the model connection
+- Select your preferred OpenAI model
+
+### Exercise 2: AI-Enhanced Search (5 minutes)
 - Search for "breast cancer"
+- Try ambiguous terms like "cancer" to see AI clarification
 - Explore the interactive map
 - Click on different trial markers
-- Expand trial cards to see details
+- Expand trial cards to see AI-simplified details
 
-### Exercise 2: Profile Setup (5 minutes)
+### Exercise 3: Profile Setup with AI (5 minutes)
 - Open the left sidebar
 - Fill out your user profile
-- See how recommendations change
+- See how AI enhances recommendations
 - Try different risk tolerance levels
+- Notice AI-powered personalization
 
-### Exercise 3: Advanced Features (10 minutes)
+### Exercise 4: Advanced AI Features (10 minutes)
 - Search for "multiple sclerosis"
-- Look at the Story Journey section
-- Examine the workflow visualization
+- Look at the Story Journey section with AI workflow
+- Examine the AI-powered workflow visualization
 - Try different medical conditions
+- Compare AI responses across different models
 
 ## 🔧 Troubleshooting
 
@@ -132,6 +152,11 @@ def main():
     # Test Streamlit
     if not test_streamlit():
         print("\n❌ Setup failed at Streamlit test.")
+        sys.exit(1)
+    
+    # Test OpenAI integration
+    if not test_openai():
+        print("\n❌ Setup failed at OpenAI integration test.")
         sys.exit(1)
     
     # Create workshop guide

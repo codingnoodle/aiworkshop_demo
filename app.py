@@ -9,11 +9,12 @@ from streamlit_folium import st_folium
 from typing import TypedDict, Annotated, List, Dict, Any
 from langgraph.graph import StateGraph, START, END
 from langchain_core.messages import HumanMessage, AIMessage
-from langchain_ollama import ChatOllama
+from langchain_openai import ChatOpenAI
 import re
 from collections import Counter
 import io
 import base64
+import os
 
 # Configure Streamlit page
 st.set_page_config(
@@ -118,37 +119,34 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Initialize Ollama LLM
+# Initialize OpenAI LLM
 @st.cache_resource
-def get_ollama_llm(model_name: str = "llama3.1:8b"):
-    """Initialize Ollama LLM with specified model"""
+def get_openai_llm(model_name: str = "gpt-3.5-turbo"):
+    """Initialize OpenAI LLM with specified model"""
     try:
-        llm = ChatOllama(model=model_name, temperature=0.1)
+        llm = ChatOpenAI(model=model_name, temperature=0.1)
         return llm
     except Exception as e:
-        st.error(f"Error initializing Ollama with model {model_name}: {str(e)}")
+        st.error(f"Error initializing OpenAI with model {model_name}: {str(e)}")
         return None
 
-# Function to get available Ollama models
+# Function to get available OpenAI models
 @st.cache_data
 def get_available_models():
-    """Get list of available Ollama models"""
+    """Get list of available OpenAI models"""
     try:
-        import subprocess
-        result = subprocess.run(['ollama', 'list'], capture_output=True, text=True)
-        if result.returncode == 0:
-            lines = result.stdout.strip().split('\n')[1:]  # Skip header
-            models = []
-            for line in lines:
-                if line.strip():
-                    parts = line.split()
-                    if parts:
-                        models.append(parts[0])
-            return models
-        return []
+        # Common OpenAI models available for chat completion
+        models = [
+            "gpt-3.5-turbo",
+            "gpt-3.5-turbo-16k", 
+            "gpt-4",
+            "gpt-4-turbo-preview",
+            "gpt-4-32k"
+        ]
+        return models
     except Exception as e:
-        st.error(f"Error getting available models: {str(e)}")
-        return []
+        st.error(f"Error getting OpenAI models: {str(e)}")
+        return ["gpt-3.5-turbo"]  # Fallback to default
 
 # Helper function to parse age values from various formats
 def parse_age(age_value) -> int:
@@ -318,20 +316,20 @@ if "agent_state" not in st.session_state:
         "visualization_data": {},
         "needs_clarification": False,
         "clarification_question": "",
-        "selected_model": "llama3.1:8b",
+        "selected_model": "gpt-3.5-turbo",
         # Initialize new fields
         "user_profile": {},
         "risk_assessments": {},
         "personalized_recommendations": []
     }
 
-# Real LLM function using Ollama
-def real_llm(prompt: str, model_name: str = "llama3.1:8b") -> str:
-    """Real LLM function using Ollama for local inference"""
+# Real LLM function using OpenAI
+def real_llm(prompt: str, model_name: str = "gpt-3.5-turbo") -> str:
+    """Real LLM function using OpenAI for cloud inference"""
     try:
-        llm = get_ollama_llm(model_name)
+        llm = get_openai_llm(model_name)
         if llm is None:
-            return "Error: Could not initialize Ollama LLM. Please check if Ollama is running and the model is available."
+            return "Error: Could not initialize OpenAI LLM. Please check your API key and model availability."
         
         # Create a more specific prompt for better results
         if "clarify" in prompt.lower():
@@ -374,7 +372,7 @@ def real_llm(prompt: str, model_name: str = "llama3.1:8b") -> str:
 def clarify_disease(state: AgentState) -> AgentState:
     """Check if disease input needs clarification"""
     disease = state.get("disease_name", "").lower()
-    selected_model = state.get("selected_model", "llama3.1:8b")
+    selected_model = state.get("selected_model", "gpt-3.5-turbo")
     
     # Simple rules for ambiguous terms
     ambiguous_terms = ["cancer", "tumor", "disease", "condition", "illness"]
@@ -452,7 +450,7 @@ def summarize_eligibility(state: AgentState) -> AgentState:
     """Summarize eligibility criteria using LLM"""
     api_results = state.get("api_results", {})
     studies = api_results.get("studies", [])
-    selected_model = state.get("selected_model", "llama3.1:8b")
+    selected_model = state.get("selected_model", "gpt-3.5-turbo")
     
     if not studies:
         state["simplified_criteria"] = "No trials found to analyze eligibility criteria."
@@ -731,7 +729,7 @@ def risk_analyzer(state: AgentState) -> AgentState:
     """Analyze and explain risks and benefits of trials"""
     api_results = state.get("api_results", {})
     studies = api_results.get("studies", [])
-    selected_model = state.get("selected_model", "llama3.1:8b")
+    selected_model = state.get("selected_model", "gpt-3.5-turbo")
     
     if not studies:
         state["risk_assessments"] = {}
@@ -1131,44 +1129,21 @@ def main():
     st.markdown('<h1 class="main-header">🏥 Patient & Caregiver Trial Navigator</h1>', unsafe_allow_html=True)
     st.markdown('<p style="text-align: center; font-size: 1.2rem; color: #666;">Find and understand clinical trials for your condition</p>', unsafe_allow_html=True)
     
-    # Model selection sidebar
-    with st.sidebar:
-        st.markdown("### 🤖 AI Model Configuration")
-        
+    # Model selection (hidden from UI - backend only)
+    api_key = os.getenv("OPENAI_API_KEY")
+    
+    # Always set a default model
+    selected_model = "gpt-3.5-turbo"
+    
+    if api_key:
         # Get available models
         available_models = get_available_models()
         
         if available_models:
-            selected_model = st.selectbox(
-                "Choose Ollama Model:",
-                available_models,
-                index=0 if "llama3.1:8b" in available_models else 0,
-                help="Select the local Ollama model to use for AI responses"
-            )
-            
-            # Model info
-            st.markdown(f"""
-            <div class="model-info">
-                <strong>Selected Model:</strong> {selected_model}<br>
-                <strong>Type:</strong> Local (Ollama)<br>
-                <strong>Status:</strong> ✅ Available
-            </div>
-            """, unsafe_allow_html=True)
-            
-            # Test model connection
-            if st.button("Test Model Connection"):
-                with st.spinner("Testing model connection..."):
-                    test_response = real_llm("Hello, this is a test message.", selected_model)
-                    if "Error" not in test_response:
-                        st.success("✅ Model connection successful!")
-                        st.info(f"Test response: {test_response[:100]}...")
-                    else:
-                        st.error("❌ Model connection failed!")
-        else:
-            st.error("❌ No Ollama models found!")
-            st.info("Please install models using: `ollama pull llama3.1:8b`")
-        
-        st.markdown("---")
+            selected_model = available_models[0]  # Use first available model
+    
+    # User profile sidebar
+    with st.sidebar:
         st.markdown("### 👤 User Profile & Preferences")
         
         # User profile form

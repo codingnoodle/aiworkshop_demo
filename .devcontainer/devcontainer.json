@@ -38,5 +38,10 @@
   },
   "postCreateCommand": "pip install -r requirements.txt",
   "remoteUser": "vscode",
-  "workspaceFolder": "/workspaces/clinical_trials"
+  "workspaceFolder": "/workspaces/clinical_trials",
+  "containerEnv": {
+    "OPENAI_API_KEY": "${OPENAI_API_KEY}"
+  },
+  "onCreateCommand": "echo 'Setting up OpenAI API key from repository secret...'",
+  "postCreateCommand": "pip install -r requirements.txt && echo 'Workshop environment ready! Run: streamlit run app.py'"
 }

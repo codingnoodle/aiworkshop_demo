@@ -8,5 +8,4 @@ langgraph>=0.0.20
 langchain-core>=0.1.0
 langchain-openai>=0.0.5
 langchain-anthropic>=0.0.5
-langchain-ollama>=0.1.0
 typing-extensions>=4.8.0

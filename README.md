@@ -18,7 +18,10 @@ This application is designed to bridge the gap between complex clinical trial in
 
 ### 🆕 **What's New**
 
-**🤖 Local AI Integration**: The app now includes optional Ollama support for enhanced AI responses without external APIs. All AI features work out of the box with smart fallbacks, but you can enhance them with local models for better performance and privacy.
+**🤖 AI Integration Options**: The app includes multiple AI integration options:
+- **OpenAI Integration** (openai-integration branch): Cloud-based AI using OpenAI API for enhanced responses
+- **Local AI Integration** (ollama-integration branch): Local Ollama support for privacy-focused AI responses
+- **Smart Fallbacks**: All AI features work out of the box with intelligent fallback responses
 
 **🔄 Reflexion Workflow**: The system now continuously improves search results through intelligent feedback loops, ensuring you get the best possible matches for your condition.
 
@@ -37,7 +40,7 @@ This application is designed to bridge the gap between complex clinical trial in
 4. **Click the URL** that appears in the terminal
 5. **Start exploring**: Enter "diabetes" in the chat box
 
-**Workshop-specific instructions**: See `WORKSHOP_README.md` for guided exercises!
+**Workshop-specific instructions**: See `WORKSHOP_SETUP.md` for complete setup and exercises
 
 ### **For First-Time Users (Local Setup)**
 
@@ -58,6 +61,41 @@ After entering a condition, you'll get:
 4. **👥 Demographic Analysis**: Age groups, gender requirements, study types
 5. **📋 Trial Details**: Expandable cards with specific trial information
 6. **✅ Simplified Eligibility**: AI-powered translation of technical criteria into plain language
+
+---
+
+## 🌿 **Available Branches**
+
+This repository includes multiple versions optimized for different use cases:
+
+### **Main Branch** (Default)
+- **Smart Fallbacks**: Works without any AI setup
+- **Basic Features**: Core clinical trial search and visualization
+- **Perfect for**: Quick demos and basic functionality
+
+### **OpenAI Integration Branch** (`openai-integration`)
+- **Cloud AI**: Uses OpenAI API for enhanced AI responses
+- **Advanced Features**: Disease clarification, eligibility simplification
+- **Perfect for**: Workshops, demos, and users with OpenAI API access
+- **Setup**: Requires OpenAI API key via environment variables (secure)
+
+### **Ollama Integration Branch** (`ollama-integration`)
+- **Local AI**: Uses Ollama for privacy-focused AI responses
+- **Advanced Features**: Same as OpenAI but runs locally
+- **Perfect for**: Privacy-conscious users and offline environments
+- **Setup**: Requires Ollama installation
+
+### **Switching Branches**
+```bash
+# Switch to OpenAI version
+git checkout openai-integration
+
+# Switch to Ollama version  
+git checkout ollama-integration
+
+# Switch back to main
+git checkout main
+```
 
 ---
 
