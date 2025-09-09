@@ -100,4 +100,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**🎯 Ready to explore clinical trials? Start with the Quick Start guide above!**
