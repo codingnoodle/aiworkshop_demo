@@ -33,12 +33,21 @@ This application is designed to bridge the gap between complex clinical trial in
 
 ### **🎓 For Workshop Participants (GitHub Codespaces)**
 
-**Super Quick Start (30 seconds):**
+**🎓 For Workshop Participants (Fork First!):**
+1. **Fork this repository** (click "Fork" button) - **This creates your personal copy**
+2. **Go to your fork** → **"Code" → "Codespaces" → "Create codespace"**
+3. **Wait for setup** (2-3 minutes for first time)
+4. **Run**: `streamlit run app.py`
+5. **Click the URL** that appears in the terminal
+6. **Start exploring**: Enter "diabetes" in the chat box
+7. **Experiment freely**: Make changes, try different approaches!
+
+**⚡ Quick Demo (No Fork):**
 1. **Click "Code" → "Codespaces" → "Create codespace"** on this repository
 2. **Wait for setup** (2-3 minutes for first time)
 3. **Run**: `streamlit run app.py`
 4. **Click the URL** that appears in the terminal
-5. **Start exploring**: Enter "diabetes" in the chat box
+5. **Note**: Changes will be lost when Codespace closes
 
 **Workshop-specific instructions**: See `WORKSHOP_SETUP.md` for complete setup and exercises
 

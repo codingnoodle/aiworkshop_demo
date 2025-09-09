@@ -6,18 +6,67 @@ Complete setup guide for the Clinical Trials Navigator workshop with OpenAI inte
 
 ### For Workshop Participants
 
+**🎓 Recommended: Fork First (Personal Copy)**
 1. **Go to**: `https://github.com/codingnoodle/aiworkshop_demo`
-2. **Click "Code"** → **"Codespaces"** → **"Create codespace on main"**
+2. **Click "Fork"** button (creates your personal copy)
+3. **Verify you're in your fork**: URL should show `github.com/YOUR_USERNAME/aiworkshop_demo`
+4. **Go to your fork** → **"Code"** → **"Codespaces"** → **"Create codespace"**
+5. **Wait 2-3 minutes** for setup
+6. **Run**: `streamlit run app.py`
+7. **Click the URL** that appears in the terminal
+8. **Start exploring**: Enter "diabetes" in the chat box
+9. **Experiment freely**: Make changes, try different approaches!
+
+**✅ How to Know You Forked Correctly:**
+- **URL shows your username**: `github.com/YOUR_USERNAME/aiworkshop_demo`
+- **You see "forked from codingnoodle/aiworkshop_demo"** at the top
+- **You can see the "Fork" button** (it will show your fork count)
+
+**⚡ Quick Demo (No Fork)**
+1. **Go to**: `https://github.com/codingnoodle/aiworkshop_demo`
+2. **Click "Code"** → **"Codespaces"** → **"Create codespace"**
 3. **Wait 2-3 minutes** for setup
 4. **Run**: `streamlit run app.py`
-5. **Click the URL** that appears in the terminal
-6. **Start exploring**: Enter "diabetes" in the chat box
+5. **Note**: Changes will be lost when Codespace closes
 
 ### For Instructors
 
 1. **Set up repository secret** (see API Key Setup section below)
 2. **Share repository link** with participants
-3. **Guide through exercises** (see Workshop Exercises section)
+3. **Emphasize forking** - Make it clear this is required, not optional
+4. **Guide through exercises** (see Workshop Exercises section)
+
+#### **Preventing "Forgot to Fork" Issues:**
+
+**Before Workshop:**
+- **Send instructions early** - Include fork requirement in pre-workshop email
+- **Create a checklist** - "Step 1: Fork the repository"
+- **Show the fork button** - Point out exactly where to click
+
+**During Workshop:**
+- **Start with forking** - First 5 minutes dedicated to forking
+- **Check everyone** - "Raise your hand if you see your username in the URL"
+- **Verify forks** - Have participants confirm they're in their own repository
+
+#### **Recovery: If Someone Forgot to Fork**
+
+**Option 1: Fork Now (Recommended)**
+1. **Go to**: `https://github.com/codingnoodle/aiworkshop_demo`
+2. **Click "Fork"** button
+3. **Close current Codespace**
+4. **Go to your fork** → **"Code"** → **"Codespaces"** → **"Create codespace"**
+5. **Start over** - You'll have your personal copy
+
+**Option 2: Continue Without Fork (Limited)**
+- **Can still participate** - App works the same
+- **Changes will be lost** - When Codespace closes
+- **No experimentation** - Can't modify code
+- **Good for**: Just following along, not experimenting
+
+**Option 3: Export Changes (Advanced)**
+- **Download files** - Save any modifications locally
+- **Fork later** - Apply changes to your fork
+- **Complex** - Not recommended for beginners
 
 ## 🔑 API Key Setup (Instructors Only)
 
