@@ -9,10 +9,7 @@
 4. **Run the app** (see Commands section below)
 5. **Start exploring**: Enter "diabetes" in the chat box
 
-### For Instructors
-1. **Create workshop API key** with $10-20 monthly limit
-2. **Share key** via secure channel (chat/email)
-3. **Monitor usage** on OpenAI dashboard
+
 
 ## 🔑 API Key Setup
 
@@ -67,12 +64,6 @@ cd /workspaces/aiworkshop_demo
 source venv/bin/activate
 streamlit run app.py --server.port 8501
 ```
-
-## 💰 Cost Info
-- **Typical workshop**: $0.50-2.00 per participant
-- **Monitor usage**: [OpenAI Dashboard](https://openai.com/usage)
-- **Use GPT-3.5-turbo** for lower costs
-
 ---
 
 **Ready to start? Use the setup commands above!** 🚀
