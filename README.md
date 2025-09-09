@@ -28,7 +28,18 @@ This application is designed to bridge the gap between complex clinical trial in
 
 ## 🚀 **Quick Start Guide**
 
-### **For First-Time Users**
+### **🎓 For Workshop Participants (GitHub Codespaces)**
+
+**Super Quick Start (30 seconds):**
+1. **Click "Code" → "Codespaces" → "Create codespace"** on this repository
+2. **Wait for setup** (2-3 minutes for first time)
+3. **Run**: `streamlit run app.py`
+4. **Click the URL** that appears in the terminal
+5. **Start exploring**: Enter "diabetes" in the chat box
+
+**Workshop-specific instructions**: See `WORKSHOP_README.md` for guided exercises!
+
+### **For First-Time Users (Local Setup)**
 
 1. **Open the App**: Navigate to the provided URL (usually `http://localhost:8501`)
 2. **Enter Your Condition**: Type a specific medical condition in the chat box
