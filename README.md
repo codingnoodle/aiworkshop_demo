@@ -93,13 +93,6 @@ See `LANGGRAPH_WORKFLOW.md` for a detailed explanation of the AI system.
 - **Technical issues**: Check the troubleshooting section in `WORKSHOP_SETUP.md`
 - **AI system**: Read `LANGGRAPH_WORKFLOW.md`
 
-## 🎓 **For Instructors**
-
-This repository is optimized for workshops:
-- **Fork-first workflow** for participants
-- **Shared API key support** for cost management
-- **Comprehensive documentation** for smooth delivery
-- **Fallback mode** works without API keys
 
 ## 📄 **License**
 
